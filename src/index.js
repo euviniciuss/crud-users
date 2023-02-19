@@ -1,10 +1,10 @@
 const http = require('http')
-
 const routes = require('./routes')
-const url = require('url')
+const { URL } = require('url')
 
 const server = http.createServer((request, response) => {
-  const parsedUrl = url.parse(request.url, true)
+  const url = `http://localhost:8080${request.url}`;
+  const parsedUrl = new URL(url)
 
   console.log(`Request Method: ${request.method} | Endpoint: ${parsedUrl.pathname}`);
 
@@ -13,7 +13,7 @@ const server = http.createServer((request, response) => {
   ))
 
   if (route) {
-    request.query = parsedUrl.query
+    request.query = Object.fromEntries(parsedUrl.searchParams)
     route.handler(request, response)
   } else {
     response.writeHead(404, { 'Content-Type': 'text/html' })
