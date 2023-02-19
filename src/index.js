@@ -9,8 +9,6 @@ const server = http.createServer((request, response) => {
     routeObj.endpoint === request.url && routeObj.method === request.method
   ))
 
-  console.log(routes[0]);
-
   if (route) {
     route.handler(request, response)
   } else {
