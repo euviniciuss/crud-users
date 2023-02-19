@@ -15,4 +15,18 @@ function listUsers(request, response) {
   response.end(JSON.stringify(sortedUsers))
 }
 
-module.exports = { listUsers }
+function getUsersById(request, response) {
+  const { id } = request.params
+
+  const user = users.find((user) => user.id === Number(id))
+
+  if (user) {
+    response.writeHead(200, { 'Content-Type': 'application/json' })
+    response.end(JSON.stringify({ user }))
+  } else {
+    response.writeHead(404, { 'Content-Type': 'application/json' })
+    response.end(JSON.stringify({ error: 'User not found in database' }))
+  }
+}
+
+module.exports = { listUsers, getUsersById }
