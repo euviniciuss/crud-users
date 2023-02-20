@@ -26,4 +26,18 @@ function getUsersById(request, response) {
   response.send(200, user)
 }
 
-module.exports = { listUsers, getUsersById }
+function createUser(request, response) {
+  const { body } = request
+  const lastUserId = users[users.length - 1].id
+
+  const newUser = {
+    id: lastUserId + 1,
+    name: body.name
+  }
+
+  users.push(newUser)
+
+  response.send(201, { message: "User successfully created!" })
+}
+
+module.exports = { listUsers, getUsersById, createUser }
