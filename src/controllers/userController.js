@@ -63,7 +63,17 @@ function updateUsers(request, response) {
     return user
   })
 
-  response.send(200, { id, name })
+  response.send(200, { message: 'User updated successfully!' })
 }
 
-module.exports = { listUsers, getUsersById, createUser, updateUsers }
+function deleteUsers(request, response) {
+  let { id } = request.params
+  id = Number(id)
+
+  users = users.filter((user) => user.id !== id)
+
+  response.send(200, { message: 'User removed successfully!' })
+}
+
+
+module.exports = { listUsers, getUsersById, createUser, updateUsers, deleteUsers }
